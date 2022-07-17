@@ -10,6 +10,7 @@ class ProfileCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = [
+            'email',
             'fio',
             'role',
         ]

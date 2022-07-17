@@ -10,9 +10,10 @@ class User(AbstractUser):
         (1, 'Заказчик'),
         (2, 'Копирайтер'),
     ]
+    email = models.CharField("E-mail", max_length=1024)
     fio = models.CharField("ФИО", max_length=1024)
     role = models.PositiveSmallIntegerField(choices=USER_ROLE)
-    REQUIRED_FIELDS = ["fio", "role"]
+    REQUIRED_FIELDS = ["email", "fio", "role"]
 
 
 class Profile(models.Model):
