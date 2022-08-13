@@ -136,6 +136,9 @@ GitHub.sublime-settings
 !.vscode/extensions.json 
 .history
 
+#back
+fll_drf/settings.py
+
 # front
 fll/
 node_modules/

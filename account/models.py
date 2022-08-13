@@ -8,7 +8,7 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     USER_ROLE = [
         (1, 'Заказчик'),
-        (2, 'Копирайтер'),
+        (2, 'Исполнитель'),
     ]
     email = models.CharField("E-mail", max_length=1024)
     fio = models.CharField("ФИО", max_length=1024)
