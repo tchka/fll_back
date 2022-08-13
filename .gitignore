@@ -138,6 +138,8 @@ GitHub.sublime-settings
 
 #back
 fll_drf/settings.py
+order/migrations/
+account/migratoins/
 
 # front
 fll/
