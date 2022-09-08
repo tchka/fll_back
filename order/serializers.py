@@ -53,8 +53,8 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         # fields = '__all__'
-        fields = ('name', 'description', 'keyword', 'length', 'category', 'customer', 'executor_level', 'executor', 'status')
-        read_only_fields = ('executor',)
+        fields = ('id', 'name', 'description', 'keyword', 'length', 'category', 'customer', 'executor_level', 'executor', 'status')
+        read_only_fields = ('id', 'executor',)
 
 class OrderCreateSerializer(serializers.ModelSerializer):
     class Meta:
