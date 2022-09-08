@@ -55,7 +55,7 @@ class UserRetrieveSerializer(serializers.ModelSerializer):
 
 
 class UserUpdateSerializer(serializers.ModelSerializer):
-    profile = ProfileSerializer(required=True, many=False)
+    profile = ProfileSerializer(required=False, many=False)
 
     class Meta:
         model = get_user_model()
