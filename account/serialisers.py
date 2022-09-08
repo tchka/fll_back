@@ -77,6 +77,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         profile, created = Profile.objects.update_or_create(user=instance, defaults={
             'gender': validated_data['profile'].get('gender')
         })
+        instance.fio = validated_data.get('fio', instance.fio)
 
         instance.save()
         return instance

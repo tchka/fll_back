@@ -12,7 +12,7 @@ urlpatterns = [
     # path('executor-level/new', views.ExecutorLevelCreateView.as_view()),
     # path('order-status/<int:pk>', views.CategoryRetrieveView.as_view()),
     # path('order-status/update/<int:pk>', views.OrderStatusUpdateView.as_view()),
-    # path('order-status/all', views.OrderStatusListView.as_view()),
+    path('order-status/all', views.OrderStatusListView.as_view()),
     # path('order-status/new', views.OrderStatusCreateView.as_view()),
     path('message/<int:pk>', views.MessageRetrieveView.as_view()),
     path('message/update/<int:pk>', views.MessageUpdateView.as_view()),
@@ -29,5 +29,6 @@ urlpatterns = [
     path('order/<int:pk>', views.OrderRetrieveView.as_view()),
     path('order/update/<int:pk>', views.OrderUpdateView.as_view()),
     path('order/all', views.OrderListView.as_view()),
+    path('order/published', views.OrderListView.as_view()),
     path('order/new', views.OrderCreateView.as_view()),
 ]

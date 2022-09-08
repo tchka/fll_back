@@ -71,7 +71,7 @@ class OrderStatusCreateView(generics.CreateAPIView):
     # permission_class = permissions.IsAuthenticatedOrReadOnly
 
 
-class OrderStatusListView(generics.CreateAPIView):
+class OrderStatusListView(generics.ListAPIView):
     queryset = OrderStatus.objects.all()
     serializer_class = OrderStatusSerializer
 
@@ -193,6 +193,7 @@ class OrderListView(generics.ListAPIView):
 
         customer = params.get('customer', None)
         executor = params.get('executor', None)
+        status = params.get('status', None)
         type = params.get('type', None)
 
         if customer:
@@ -201,5 +202,12 @@ class OrderListView(generics.ListAPIView):
             queryset = queryset.filter(executor__id=executor)
         if type:
             queryset = queryset.filter(type=type)
+        if status:
+            queryset = queryset.filter(status=status)
 
         return queryset
+
+
+class OrderPublishedListView(generics.ListAPIView):
+    queryset = Order.objects.filter(status_id=2)
+    serializer_class = OrderSerializer
