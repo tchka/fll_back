@@ -173,7 +173,7 @@ class OrderRetrieveView(generics.RetrieveAPIView):
 
 class OrderUpdateView(generics.UpdateAPIView):
     queryset = Order.objects.all()
-    serializer_class = OrderCreateSerializer
+    serializer_class = OrderSerializer
     # permission_class = permissions.IsAuthenticatedOrReadOnly
 
 
