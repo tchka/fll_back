@@ -177,6 +177,13 @@ class OrderUpdateView(generics.UpdateAPIView):
     # permission_class = permissions.IsAuthenticatedOrReadOnly
 
 
+class OrderUnpublishedUpdateView(generics.UpdateAPIView):
+    serializer_class = OrderSerializer
+    # permission_class = permissions.IsAuthenticatedOrReadOnly
+    def get_queryset(self):
+        return Order.objects.filter(status__id=1)
+
+
 class OrderCreateView(generics.CreateAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderCreateSerializer

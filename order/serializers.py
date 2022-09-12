@@ -44,7 +44,7 @@ class OrderStatusCreateSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     # type = serializers.CharField(source='get_type_display')
-    executor_level = ExecutorLevelSerializer()
+    executor_level_name = serializers.CharField(source='executor_level.name')
     category = CategorySerializer()
     status = OrderStatusSerializer()
     customer = UserSerializer()
@@ -53,7 +53,7 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         # fields = '__all__'
-        fields = ('id', 'name', 'description', 'keyword', 'length', 'category', 'customer', 'executor_level', 'executor', 'status')
+        fields = ('id', 'name', 'description', 'keyword', 'length', 'category', 'customer', 'executor_level_name', 'executor', 'status')
         read_only_fields = ('id', 'executor',)
 
 class OrderCreateSerializer(serializers.ModelSerializer):
