@@ -44,7 +44,7 @@ class OrderStatusCreateSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     # type = serializers.CharField(source='get_type_display')
-    executor_level_name = serializers.CharField(source='executor_level.name')
+    executor_level_name = serializers.CharField(source='executor_level.name', read_only=False)
     category = CategorySerializer()
     status = OrderStatusSerializer()
     customer = UserSerializer()
