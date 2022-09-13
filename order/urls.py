@@ -4,7 +4,7 @@ from . import views
 urlpatterns = [
     # path('category/<int:pk>', views.CategoryRetrieveView.as_view()),
     # path('category/update/<int:pk>', views.CategoryUpdateView.as_view()),
-    # path('category/all', views.CategoryListView.as_view()),
+    path('category/all', views.CategoryListView.as_view()),
     # path('category/new', views.CategoryCreateView.as_view()),
     # path('executor-level/<int:pk>', views.ExecutorLevelRetrieveView.as_view()),
     # path('executor-level/update/<int:pk>', views.ExecutorLevelUpdateView.as_view()),

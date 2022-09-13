@@ -27,7 +27,7 @@ class CategoryCreateView(generics.CreateAPIView):
     # permission_class = permissions.IsAuthenticatedOrReadOnly
 
 
-class CategoryListView(generics.CreateAPIView):
+class CategoryListView(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
