@@ -6,8 +6,8 @@ from .models import Category, ExecutorLevel, OrderStatus, Order, Message, Ticket
 from django.contrib.auth.models import User
 from .serializers import CategorySerializer, CategoryCreateSerializer, ExecutorLevelSerializer, \
     ExecutorLevelCreateSerializer, OrderStatusSerializer, OrderStatusCreateSerializer, OrderSerializer, \
-    OrderCreateSerializer, MessageSerializer, MessageCreateSerializer, TicketSerializer, TicketCreateSerializer, \
-    ReviewSerializer, ReviewCreateSerializer
+    OrderCreateSerializer, OrderUnpublishedSerializer, MessageSerializer, MessageCreateSerializer, TicketSerializer, \
+    TicketCreateSerializer, ReviewSerializer, ReviewCreateSerializer
 
 
 class CategoryRetrieveView(generics.RetrieveAPIView):
@@ -178,7 +178,8 @@ class OrderUpdateView(generics.UpdateAPIView):
 
 
 class OrderUnpublishedUpdateView(generics.UpdateAPIView):
-    serializer_class = OrderSerializer
+    serializer_class = OrderUnpublishedSerializer
+
     # permission_class = permissions.IsAuthenticatedOrReadOnly
     def get_queryset(self):
         return Order.objects.filter(status__id=1)

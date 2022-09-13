@@ -42,13 +42,10 @@ class OrderStatusCreateSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-
 class OrderSerializer(serializers.ModelSerializer):
     # type = serializers.CharField(source='get_type_display')
-    executor_level = serializers.SlugRelatedField(read_only=False, queryset=ExecutorLevel.objects.all(), slug_field='name')
-    # executor_level_name = serializers.PrimaryKeyRelatedField(many=True, read_only=False, queryset=ExecutorLevel.objects.all(), source='executor_level')
-    # executor_level = OrderStatusSerializer(read_only=False)
-    # executor_level = serializers.SlugRelatedField(read_only=False, slug_field='name', source='executor_level')
+    executor_level = serializers.SlugRelatedField(read_only=False, queryset=ExecutorLevel.objects.all(),
+                                                  slug_field='name')
     category = CategorySerializer()
     status = OrderStatusSerializer()
     customer = UserSerializer()
@@ -57,8 +54,27 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         # fields = '__all__'
-        fields = ('id', 'name', 'description', 'keyword', 'length', 'category', 'customer', 'executor_level', 'executor', 'status')
+        fields = (
+        'id', 'name', 'description', 'keyword', 'length', 'category', 'customer', 'executor_level', 'executor',
+        'status')
         read_only_fields = ('id', 'executor',)
+
+class OrderUnpublishedSerializer(serializers.ModelSerializer):
+    # type = serializers.CharField(source='get_type_display')
+    executor_level = serializers.SlugRelatedField(read_only=False, queryset=ExecutorLevel.objects.all(),
+                                                  slug_field='name')
+    category = serializers.SlugRelatedField(read_only=False, queryset=ExecutorLevel.objects.all(),
+                                                  slug_field='name')
+    status = OrderStatusSerializer()
+
+    class Meta:
+        model = Order
+        # fields = '__all__'
+        fields = (
+        'id', 'name', 'category', 'description', 'keyword', 'length', 'price',  'executor_level', 'execution_time',
+        'status')
+        read_only_fields = ('id', )
+
 
 class OrderCreateSerializer(serializers.ModelSerializer):
     class Meta:
