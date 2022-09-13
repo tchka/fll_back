@@ -27,7 +27,7 @@ urlpatterns = [
     path('review/all', views.ReviewListView.as_view()),
     path('review/new', views.ReviewCreateView.as_view()),
     path('order/<int:pk>', views.OrderRetrieveView.as_view()),
-    path('order/update/<int:pk>', views.OrderUpdateView.as_view()),
+    path('order/update/<int:pk>', views.OrderUnpublishedUpdateView.as_view()),
     path('order/all', views.OrderListView.as_view()),
     path('order/published', views.OrderPublishedListView.as_view()),
     path('order/new', views.OrderCreateView.as_view()),
