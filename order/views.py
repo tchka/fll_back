@@ -49,7 +49,7 @@ class ExecutorLevelCreateView(generics.CreateAPIView):
     # permission_class = permissions.IsAuthenticatedOrReadOnly
 
 
-class ExecutorLevelListView(generics.CreateAPIView):
+class ExecutorLevelListView(generics.ListAPIView):
     queryset = ExecutorLevel.objects.all()
     serializer_class = ExecutorLevelSerializer
 
