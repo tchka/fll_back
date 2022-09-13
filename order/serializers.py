@@ -63,7 +63,7 @@ class OrderUnpublishedSerializer(serializers.ModelSerializer):
     # type = serializers.CharField(source='get_type_display')
     executor_level = serializers.SlugRelatedField(read_only=False, queryset=ExecutorLevel.objects.all(),
                                                   slug_field='name')
-    category = serializers.SlugRelatedField(read_only=False, queryset=ExecutorLevel.objects.all(),
+    category = serializers.SlugRelatedField(read_only=False, queryset=Category.objects.all(),
                                                   slug_field='name')
     status = OrderStatusSerializer()
 
