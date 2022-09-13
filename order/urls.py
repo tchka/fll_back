@@ -8,7 +8,7 @@ urlpatterns = [
     # path('category/new', views.CategoryCreateView.as_view()),
     # path('executor-level/<int:pk>', views.ExecutorLevelRetrieveView.as_view()),
     # path('executor-level/update/<int:pk>', views.ExecutorLevelUpdateView.as_view()),
-    # path('executor-level/all', views.ExecutorLevelListView.as_view()),
+    path('executor-level/all', views.ExecutorLevelListView.as_view()),
     # path('executor-level/new', views.ExecutorLevelCreateView.as_view()),
     # path('order-status/<int:pk>', views.CategoryRetrieveView.as_view()),
     # path('order-status/update/<int:pk>', views.OrderStatusUpdateView.as_view()),
