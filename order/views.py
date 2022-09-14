@@ -194,8 +194,7 @@ class OrderPublishUpdateView(generics.UpdateAPIView):
 
     def partial_update(self, request, *args, **kwargs):
         order = self.get_object()
-
-        order.status = 2
+        order.status = OrderStatus.objects.filter(id=2).first()
         order.save()
         serializer = OrderPublishSerializer(order, partial=True)
         return Response(serializer.data)

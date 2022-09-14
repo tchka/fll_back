@@ -55,9 +55,10 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         # fields = '__all__'
         fields = (
-        'id', 'name', 'description', 'keyword', 'length', 'category', 'customer', 'executor_level', 'executor',
-        'status')
+            'id', 'name', 'description', 'keyword', 'length', 'category', 'customer', 'executor_level', 'executor',
+            'status')
         read_only_fields = ('id', 'executor',)
+
 
 class OrderUnpublishedSerializer(serializers.ModelSerializer):
     # type = serializers.CharField(source='get_type_display')
@@ -69,19 +70,21 @@ class OrderUnpublishedSerializer(serializers.ModelSerializer):
         model = Order
         # fields = '__all__'
         fields = (
-        'id', 'name', 'category', 'description', 'keyword', 'length', 'price',  'executor_level', 'execution_time',
-        'status')
-        read_only_fields = ('id', 'status', )
+            'id', 'name', 'category', 'description', 'keyword', 'length', 'price', 'executor_level', 'execution_time',
+            'status')
+        read_only_fields = ('id', 'status',)
 
 
 class OrderPublishSerializer(serializers.ModelSerializer):
+    status = serializers.SlugRelatedField(queryset=OrderStatus.objects.all(), slug_field='name')
 
     class Meta:
         model = Order
         # fields = '__all__'
         fields = (
-        'id', 'status', )
-        read_only_fields = ('id', )
+            'id', 'status',)
+        read_only_fields = ('id',)
+
 
 class OrderCreateSerializer(serializers.ModelSerializer):
     class Meta:
