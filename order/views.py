@@ -192,6 +192,14 @@ class OrderPublishUpdateView(generics.UpdateAPIView):
     def get_queryset(self):
         return Order.objects.filter(status__id=1)
 
+    def partial_update(self, request, *args, **kwargs):
+        order = self.get_object()
+
+        order.status = 2
+        order.save()
+        serializer = OrderPublishSerializer(order, partial=True)
+        return Response(serializer.data)
+
 
 class OrderCreateView(generics.CreateAPIView):
     queryset = Order.objects.all()
