@@ -61,11 +61,9 @@ class OrderSerializer(serializers.ModelSerializer):
 
 class OrderUnpublishedSerializer(serializers.ModelSerializer):
     # type = serializers.CharField(source='get_type_display')
-    executor_level = serializers.SlugRelatedField(read_only=False, queryset=ExecutorLevel.objects.all(),
-                                                  slug_field='name')
-    category = serializers.SlugRelatedField(read_only=False, queryset=Category.objects.all(),
-                                                  slug_field='name')
-    status = OrderStatusSerializer()
+    executor_level = serializers.SlugRelatedField(queryset=ExecutorLevel.objects.all(), slug_field='name')
+    category = serializers.SlugRelatedField(queryset=Category.objects.all(), slug_field='name')
+    status = serializers.SlugRelatedField(queryset=OrderStatus.objects.all(), slug_field='name')
 
     class Meta:
         model = Order
@@ -73,8 +71,17 @@ class OrderUnpublishedSerializer(serializers.ModelSerializer):
         fields = (
         'id', 'name', 'category', 'description', 'keyword', 'length', 'price',  'executor_level', 'execution_time',
         'status')
-        read_only_fields = ('id', )
+        read_only_fields = ('id', 'status', )
 
+
+class OrderPublishSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Order
+        # fields = '__all__'
+        fields = (
+        'id', 'status', )
+        read_only_fields = ('id', )
 
 class OrderCreateSerializer(serializers.ModelSerializer):
     class Meta:
