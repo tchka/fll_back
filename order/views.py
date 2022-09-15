@@ -198,7 +198,12 @@ class OrderPublishUpdateView(SuccessMessageMixin, generics.UpdateAPIView):
         order.status = OrderStatus.objects.filter(id=2).first()
         order.save()
         serializer = OrderPublishSerializer(order, partial=True)
-        return Response(serializer)
+        if serializer.is_valid:
+            name = serializer.data.get('name')
+            message = 'Заказ &ldquo;{}&rdquo; опубликован.'.format(name)
+            return Response({'message':message})
+        else:
+            return Response(serializer.errors,status=400)
 
 
 class OrderCreateView(generics.CreateAPIView):

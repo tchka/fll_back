@@ -82,8 +82,8 @@ class OrderPublishSerializer(serializers.ModelSerializer):
         model = Order
         # fields = '__all__'
         fields = (
-            'id', 'status',)
-        read_only_fields = ('id',)
+            'id', 'name', 'status',)
+        read_only_fields = ('id', 'name', )
 
 
 class OrderCreateSerializer(serializers.ModelSerializer):
