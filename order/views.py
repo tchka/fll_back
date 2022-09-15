@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import generics
+from django.contrib.messages.views import SuccessMessageMixin
 
 from .models import Category, ExecutorLevel, OrderStatus, Order, Message, Ticket, Review
 from django.contrib.auth.models import User
@@ -185,7 +186,7 @@ class OrderUnpublishedUpdateView(generics.UpdateAPIView):
         return Order.objects.filter(status__id=1)
 
 
-class OrderPublishUpdateView(generics.UpdateAPIView):
+class OrderPublishUpdateView(SuccessMessageMixin, generics.UpdateAPIView):
     serializer_class = OrderPublishSerializer
 
     # permission_class = permissions.IsAuthenticatedOrReadOnly
@@ -197,12 +198,13 @@ class OrderPublishUpdateView(generics.UpdateAPIView):
         order.status = OrderStatus.objects.filter(id=2).first()
         order.save()
         serializer = OrderPublishSerializer(order, partial=True)
-        return Response(serializer.data)
+        return Response
 
 
 class OrderCreateView(generics.CreateAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderCreateSerializer
+    success_message = 'Ваша заявка опубликована'
     # permission_class = permissions.IsAuthenticatedOrReadOnly
 
 
