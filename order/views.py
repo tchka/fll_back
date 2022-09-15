@@ -198,7 +198,7 @@ class OrderPublishUpdateView(SuccessMessageMixin, generics.UpdateAPIView):
         order.status = OrderStatus.objects.filter(id=2).first()
         order.save()
         serializer = OrderPublishSerializer(order, partial=True)
-        return Response
+        return Response(serializer)
 
 
 class OrderCreateView(generics.CreateAPIView):
