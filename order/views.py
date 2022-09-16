@@ -7,7 +7,7 @@ from .models import Category, ExecutorLevel, OrderStatus, Order, Message, Ticket
 from django.contrib.auth.models import User
 from .serializers import CategorySerializer, CategoryCreateSerializer, ExecutorLevelSerializer, \
     ExecutorLevelCreateSerializer, OrderStatusSerializer, OrderStatusCreateSerializer, OrderSerializer, \
-    OrderCreateSerializer, OrderUnpublishedSerializer, OrderPublishSerializer, MessageSerializer, \
+    OrderCreateSerializer, OrderUnpublishedSerializer, OrderStatusByCustomerSerializer, MessageSerializer, \
     MessageCreateSerializer, TicketSerializer, TicketCreateSerializer, ReviewSerializer, ReviewCreateSerializer
 
 
@@ -186,8 +186,8 @@ class OrderUnpublishedUpdateView(generics.UpdateAPIView):
         return Order.objects.filter(status__id=1)
 
 
-class OrderPublishUpdateView(SuccessMessageMixin, generics.UpdateAPIView):
-    serializer_class = OrderPublishSerializer
+class OrderPublishUpdateView(generics.UpdateAPIView):
+    serializer_class = OrderStatusByCustomerSerializer
 
     # permission_class = permissions.IsAuthenticatedOrReadOnly
     def get_queryset(self):
@@ -197,14 +197,72 @@ class OrderPublishUpdateView(SuccessMessageMixin, generics.UpdateAPIView):
         order = self.get_object()
         order.status = OrderStatus.objects.filter(id=2).first()
         order.save()
-        serializer = OrderPublishSerializer(order, partial=True)
+        serializer = OrderStatusByCustomerSerializer(order, partial=True)
         if serializer.is_valid:
             name = serializer.data.get('name')
             message = 'Заказ &ldquo;{}&rdquo; опубликован.'.format(name)
             return Response({'message':message})
         else:
-            return Response(serializer.errors,status=400)
+            return Response(serializer.errors)
 
+
+class OrderCancelUpdateView(generics.UpdateAPIView):
+    serializer_class = OrderStatusByCustomerSerializer
+
+    # permission_class = permissions.IsAuthenticatedOrReadOnly
+    def get_queryset(self):
+        return Order.objects.filter(status__id__in=[1, 2,])
+
+    def partial_update(self, request, *args, **kwargs):
+        order = self.get_object()
+        order.status = OrderStatus.objects.filter(id=7).first()
+        order.save()
+        serializer = OrderStatusByCustomerSerializer(order, partial=True)
+        if serializer.is_valid:
+            name = serializer.data.get('name')
+            message = 'Заказ &ldquo;{}&rdquo; отменен.'.format(name)
+            return Response({'message':message})
+        else:
+            return Response(serializer.errors)
+
+class OrderUnpublishUpdateView(generics.UpdateAPIView):
+    serializer_class = OrderStatusByCustomerSerializer
+
+    # permission_class = permissions.IsAuthenticatedOrReadOnly
+    def get_queryset(self):
+        return Order.objects.filter(status__id=2)
+
+    def partial_update(self, request, *args, **kwargs):
+        order = self.get_object()
+        order.status = OrderStatus.objects.filter(id=1).first()
+        order.save()
+        serializer = OrderStatusByCustomerSerializer(order, partial=True)
+        if serializer.is_valid:
+            name = serializer.data.get('name')
+            message = 'Заказ &ldquo;{}&rdquo; снят с публикации.'.format(name)
+            return Response({'message':message})
+        else:
+            return Response(serializer.errors)
+
+
+class OrderRestoreUpdateView(generics.UpdateAPIView):
+    serializer_class = OrderStatusByCustomerSerializer
+
+    # permission_class = permissions.IsAuthenticatedOrReadOnly
+    def get_queryset(self):
+        return Order.objects.filter(status__id=7)
+
+    def partial_update(self, request, *args, **kwargs):
+        order = self.get_object()
+        order.status = OrderStatus.objects.filter(id=1).first()
+        order.save()
+        serializer = OrderStatusByCustomerSerializer(order, partial=True)
+        if serializer.is_valid:
+            name = serializer.data.get('name')
+            message = 'Заказ &ldquo;{}&rdquo; восстановлен.'.format(name)
+            return Response({'message':message})
+        else:
+            return Response(serializer.errors)
 
 class OrderCreateView(generics.CreateAPIView):
     queryset = Order.objects.all()

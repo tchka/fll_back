@@ -75,7 +75,7 @@ class OrderUnpublishedSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', 'status',)
 
 
-class OrderPublishSerializer(serializers.ModelSerializer):
+class OrderStatusByCustomerSerializer(serializers.ModelSerializer):
     status = serializers.SlugRelatedField(queryset=OrderStatus.objects.all(), slug_field='name')
 
     class Meta:
