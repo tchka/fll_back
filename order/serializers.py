@@ -37,10 +37,6 @@ class OrderStatusSerializer(serializers.ModelSerializer):
 
 
 class OrderStatusCreateSerializer(serializers.ModelSerializer):
-    # type = serializers.CharField(source='get_type_display')
-    executor_level = serializers.SlugRelatedField(queryset=ExecutorLevel.objects.all(), slug_field='name')
-    category = serializers.SlugRelatedField(queryset=Category.objects.all(), slug_field='name')
-
     class Meta:
         model = OrderStatus
         fields = '__all__'
@@ -90,6 +86,10 @@ class OrderStatusByCustomerSerializer(serializers.ModelSerializer):
 
 
 class OrderCreateSerializer(serializers.ModelSerializer):
+    # type = serializers.CharField(source='get_type_display')
+    executor_level = serializers.SlugRelatedField(queryset=ExecutorLevel.objects.all(), slug_field='name')
+    category = serializers.SlugRelatedField(queryset=Category.objects.all(), slug_field='name')
+
     class Meta:
         model = Order
         fields = '__all__'
