@@ -85,6 +85,17 @@ class OrderStatusByCustomerSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', 'name',)
 
 
+class OrderStatusByExecutorSerializer(serializers.ModelSerializer):
+    status = serializers.SlugRelatedField(queryset=OrderStatus.objects.all(), slug_field='name')
+
+    class Meta:
+        model = Order
+        # fields = '__all__'
+        fields = (
+            'id', 'name', 'status', 'executor',)
+        read_only_fields = ('id', 'name',)
+
+
 class OrderCreateSerializer(serializers.ModelSerializer):
     # type = serializers.CharField(source='get_type_display')
     executor_level = serializers.SlugRelatedField(queryset=ExecutorLevel.objects.all(), slug_field='name')
