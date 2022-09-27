@@ -4,6 +4,7 @@ from rest_framework import generics
 from django.contrib.messages.views import SuccessMessageMixin
 
 from .models import Category, ExecutorLevel, OrderStatus, Order, Message, Ticket, Review
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from .serializers import CategorySerializer, CategoryCreateSerializer, ExecutorLevelSerializer, \
     ExecutorLevelCreateSerializer, OrderStatusSerializer, OrderStatusCreateSerializer, OrderSerializer, \
@@ -278,7 +279,7 @@ class OrderTakeUpdateView(generics.UpdateAPIView):
         order = self.get_object()
         order.status = OrderStatus.objects.filter(id=3).first()
         executor_id = request.data.get("executor")
-        order.executor = User.objects.filter(id=executor_id).first()
+        order.executor = get_user_model().objects.filter(id=executor_id).first()
         order.save()
         serializer = OrderStatusByCustomerSerializer(order, partial=True)
         if serializer.is_valid:
