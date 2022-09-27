@@ -87,6 +87,7 @@ class OrderStatusByCustomerSerializer(serializers.ModelSerializer):
 
 class OrderStatusByExecutorSerializer(serializers.ModelSerializer):
     status = serializers.SlugRelatedField(queryset=OrderStatus.objects.all(), slug_field='name')
+    executor = UserSerializer()
 
     class Meta:
         model = Order
