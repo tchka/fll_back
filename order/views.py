@@ -279,15 +279,13 @@ class OrderTakeUpdateView(generics.UpdateAPIView):
         order = self.get_object()
         order.status = OrderStatus.objects.filter(id=3).first()
         executor_id = request.data.get("executor")
-        print(executor_id)
         order.executor = get_user_model().objects.filter(id=executor_id).first()
-        print(order.executor)
         order.save()
         serializer = OrderStatusByCustomerSerializer(order, partial=True)
         if serializer.is_valid:
             name = serializer.data.get('name')
             message = 'Вы взяли заказ &ldquo;{}&rdquo; в работу.'.format(name)
-            return Response({'message': message})
+            return Response({'serializer': serializer})
         else:
             return Response(serializer.errors)
 
