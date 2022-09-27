@@ -237,12 +237,11 @@ class OrderUnpublishUpdateView(generics.UpdateAPIView):
     def partial_update(self, request, *args, **kwargs):
         order = self.get_object()
         order.status = OrderStatus.objects.filter(id=1).first()
-        order.executor = request.data.get("executor")
         order.save()
         serializer = OrderStatusByCustomerSerializer(order, partial=True)
         if serializer.is_valid:
             name = serializer.data.get('name')
-            message = 'Вы взяли заказ &ldquo;{}&rdquo;.'.format(name)
+            message = 'Заказ &ldquo;{}&rdquo; снят с публикации.'.format(name)
             return Response({'message': message})
         else:
             return Response(serializer.errors)
@@ -278,11 +277,13 @@ class OrderTakeUpdateView(generics.UpdateAPIView):
     def partial_update(self, request, *args, **kwargs):
         order = self.get_object()
         order.status = OrderStatus.objects.filter(id=3).first()
+        executor_id = request.data.get("executor")
+        order.executor = User.objects.filter(id=executor_id).first()
         order.save()
         serializer = OrderStatusByCustomerSerializer(order, partial=True)
         if serializer.is_valid:
             name = serializer.data.get('name')
-            message = 'Заказ &ldquo;{}&rdquo; отменен.'.format(name)
+            message = 'Вы взяли заказ &ldquo;{}&rdquo; в работу.'.format(name)
             return Response({'message': message})
         else:
             return Response(serializer.errors)
