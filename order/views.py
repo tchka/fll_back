@@ -10,7 +10,7 @@ from .serializers import CategorySerializer, CategoryCreateSerializer, ExecutorL
     ExecutorLevelCreateSerializer, OrderStatusSerializer, OrderStatusCreateSerializer, OrderSerializer, \
     OrderCreateSerializer, OrderUnpublishedSerializer, OrderStatusByCustomerSerializer, MessageSerializer, \
     MessageCreateSerializer, TicketSerializer, TicketCreateSerializer, ReviewSerializer, ReviewCreateSerializer, \
-    OrderStatusByExecutorSerializer
+    OrderStatusByExecutorSerializer, OrderWorkoutSerializer
 
 
 class CategoryRetrieveView(generics.RetrieveAPIView):
@@ -188,6 +188,36 @@ class OrderUnpublishedUpdateView(generics.UpdateAPIView):
         return Order.objects.filter(status__id=1)
 
 
+class OrderWorkoutUpdateView(generics.UpdateAPIView):
+    serializer_class = OrderWorkoutSerializer
+    # permission_class = permissions.IsAuthenticatedOrReadOnly
+    def get_queryset(self):
+        return Order.objects.filter(status__id__in=[3, 5, ])
+
+    def partial_update(self, request, *args, **kwargs):
+        order = self.get_object()
+        if order.status.id == 3:
+            order.status = OrderStatus.objects.filter(id=4).first()
+        elif order.status.id == 5:
+            order.status = OrderStatus.objects.filter(id=6).first()
+        order.article = request.data.get("article")
+        order.save()
+        serializer = OrderWorkoutSerializer(order, partial=True)
+        if serializer.is_valid:
+            name = serializer.data.get('name')
+            message = 'Работа &ldquo;{}&rdquo; отправлена на проверку.'.format(name)
+            return Response({'message': message})
+        else:
+            return Response(serializer.errors)
+
+class OrderUnpublishedUpdateView(generics.UpdateAPIView):
+    serializer_class = OrderUnpublishedSerializer
+
+    # permission_class = permissions.IsAuthenticatedOrReadOnly
+    def get_queryset(self):
+        return Order.objects.filter(status__id=1)
+
+
 class OrderPublishUpdateView(generics.UpdateAPIView):
     serializer_class = OrderStatusByCustomerSerializer
 
@@ -285,7 +315,7 @@ class OrderTakeUpdateView(generics.UpdateAPIView):
         if serializer.is_valid:
             name = serializer.data.get('name')
             message = 'Вы взяли заказ &ldquo;{}&rdquo; в работу.'.format(name)
-            return Response({'serializer': serializer})
+            return Response({'message': message})
         else:
             return Response(serializer.errors)
 

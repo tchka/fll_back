@@ -58,6 +58,23 @@ class OrderSerializer(serializers.ModelSerializer):
             'execution_time', 'executor', 'status')
         read_only_fields = ('id', 'customer',)
 
+class OrderWorkoutSerializer(serializers.ModelSerializer):
+    # type = serializers.CharField(source='get_type_display')
+    executor_level = serializers.SlugRelatedField(queryset=ExecutorLevel.objects.all(), slug_field='name')
+    category = serializers.SlugRelatedField(queryset=Category.objects.all(), slug_field='name')
+    status = serializers.SlugRelatedField(queryset=OrderStatus.objects.all(), slug_field='name')
+    customer = serializers.SlugRelatedField(queryset=OrderStatus.objects.all(), slug_field='username')
+    executor = serializers.SlugRelatedField(queryset=OrderStatus.objects.all(), slug_field='username')
+
+    class Meta:
+        model = Order
+        # fields = '__all__'
+        fields = (
+            'id', 'name', 'category', 'description', 'keyword', 'length', 'price', 'customer', 'executor_level',
+            'execution_time', 'executor', 'status', 'article')
+        read_only_fields = ('id', 'name', 'category', 'description', 'keyword', 'length', 'price', 'customer', 'executor_level',
+            'execution_time', 'executor')
+
 
 class OrderUnpublishedSerializer(serializers.ModelSerializer):
     # type = serializers.CharField(source='get_type_display')
