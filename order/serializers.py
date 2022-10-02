@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from .models import Category, ExecutorLevel, OrderStatus, Order, Message, Ticket, Review
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 from account.serialisers import UserSerializer, UserRetrieveSerializer
 
@@ -47,8 +48,8 @@ class OrderSerializer(serializers.ModelSerializer):
     executor_level = serializers.SlugRelatedField(queryset=ExecutorLevel.objects.all(), slug_field='name')
     category = serializers.SlugRelatedField(queryset=Category.objects.all(), slug_field='name')
     status = serializers.SlugRelatedField(queryset=OrderStatus.objects.all(), slug_field='name')
-    customer = serializers.SlugRelatedField(queryset=OrderStatus.objects.all(), slug_field='username')
-    executor = serializers.SlugRelatedField(queryset=OrderStatus.objects.all(), slug_field='username')
+    customer = serializers.SlugRelatedField(queryset=get_user_model().objects.all(), slug_field='username')
+    executor = serializers.SlugRelatedField(queryset=get_user_model().objects.all(), slug_field='username')
 
     class Meta:
         model = Order
@@ -63,8 +64,8 @@ class OrderWorkoutSerializer(serializers.ModelSerializer):
     executor_level = serializers.SlugRelatedField(queryset=ExecutorLevel.objects.all(), slug_field='name')
     category = serializers.SlugRelatedField(queryset=Category.objects.all(), slug_field='name')
     status = serializers.SlugRelatedField(queryset=OrderStatus.objects.all(), slug_field='name')
-    customer = serializers.SlugRelatedField(queryset=OrderStatus.objects.all(), slug_field='username')
-    executor = serializers.SlugRelatedField(queryset=OrderStatus.objects.all(), slug_field='username')
+    customer = serializers.SlugRelatedField(queryset=get_user_model().objects.all(), slug_field='username')
+    executor = serializers.SlugRelatedField(queryset=get_user_model().objects.all(), slug_field='username')
 
     class Meta:
         model = Order
