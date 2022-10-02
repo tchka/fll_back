@@ -196,10 +196,7 @@ class OrderWorkoutUpdateView(generics.UpdateAPIView):
 
     def partial_update(self, request, *args, **kwargs):
         order = self.get_object()
-        if order.status.id == 3:
-            order.status = OrderStatus.objects.filter(id=4).first()
-        elif order.status.id == 5:
-            order.status = OrderStatus.objects.filter(id=6).first()
+        order.status = OrderStatus.objects.filter(id=4).first()
         order.article = request.data.get("article")
         order.save()
         serializer = OrderWorkoutSerializer(order, partial=True)
