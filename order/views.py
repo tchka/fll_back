@@ -188,7 +188,7 @@ class OrderUnpublishedUpdateView(generics.UpdateAPIView):
         return Order.objects.filter(status__id=1)
 
 
-class OrderWorkoutUpdateView(generics.UpdateRetriveAPIView):
+class OrderWorkoutUpdateView(generics.UpdateRetrieveAPIView):
     serializer_class = OrderWorkoutSerializer
     # permission_class = permissions.IsAuthenticatedOrReadOnly
     def get_queryset(self):
