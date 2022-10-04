@@ -171,7 +171,7 @@ class ReviewListView(generics.CreateAPIView):
 
 class OrderRetrieveView(generics.RetrieveAPIView):
     queryset = Order.objects.all()
-    serializer_class = OrderSerializer
+    serializer_class = OrderWorkoutSerializer
 
 
 class OrderUpdateView(generics.UpdateAPIView):
