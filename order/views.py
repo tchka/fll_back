@@ -295,6 +295,44 @@ class OrderRestoreUpdateView(generics.UpdateAPIView):
             return Response(serializer.errors)
 
 
+class OrderApproveUpdateView(generics.UpdateAPIView):
+    serializer_class = OrderStatusByCustomerSerializer
+
+    # permission_class = permissions.IsAuthenticatedOrReadOnly
+    def get_queryset(self):
+        return Order.objects.filter(status__id=4)
+
+    def partial_update(self, request, *args, **kwargs):
+        order = self.get_object()
+        order.status = OrderStatus.objects.filter(id=6).first()
+        order.save()
+        serializer = OrderStatusByCustomerSerializer(order, partial=True)
+        if serializer.is_valid:
+            name = serializer.data.get('name')
+            message = 'Заказ &ldquo;{}&rdquo; принят.'.format(name)
+            return Response({'message': message})
+        else:
+            return Response(serializer.errors)
+
+class OrderDisapproveUpdateView(generics.UpdateAPIView):
+    serializer_class = OrderStatusByCustomerSerializer
+
+    # permission_class = permissions.IsAuthenticatedOrReadOnly
+    def get_queryset(self):
+        return Order.objects.filter(status__id=4)
+
+    def partial_update(self, request, *args, **kwargs):
+        order = self.get_object()
+        order.status = OrderStatus.objects.filter(id=5).first()
+        order.save()
+        serializer = OrderStatusByCustomerSerializer(order, partial=True)
+        if serializer.is_valid:
+            name = serializer.data.get('name')
+            message = 'Заказ &ldquo;{}&rdquo; отправлен на доработку.'.format(name)
+            return Response({'message': message})
+        else:
+            return Response(serializer.errors)
+
 class OrderTakeUpdateView(generics.UpdateAPIView):
     serializer_class = OrderStatusByExecutorSerializer
 

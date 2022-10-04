@@ -34,6 +34,8 @@ urlpatterns = [
     path('order/restore/<int:pk>', views.OrderRestoreUpdateView.as_view()),
     path('order/take/<int:pk>', views.OrderTakeUpdateView.as_view()),
     path('order/workout/<int:pk>', views.OrderWorkoutUpdateView.as_view()),
+    path('order/approve/<int:pk>', views.OrderApproveUpdateView.as_view()),
+    path('order/disapprove/<int:pk>', views.OrderDisapproveUpdateView.as_view()),
     path('order/all', views.OrderListView.as_view()),
     path('order/published', views.OrderPublishedListView.as_view()),
     path('order/new', views.OrderCreateView.as_view()),
