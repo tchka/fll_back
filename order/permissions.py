@@ -12,7 +12,7 @@ class IsCustomer(permissions.BasePermission):
 
 class IsExecutor(permissions.BasePermission):
     """
-    Check if user is Customer or not.
+    Check if user is Executor or not.
     """
 
     def has_object_permission(self, request, view, obj):
@@ -21,7 +21,7 @@ class IsExecutor(permissions.BasePermission):
 
 class IsCustomerOrExecutor(permissions.BasePermission):
     """
-    Check if user is Customer or not.
+    Check if user is Customer, Executor or not.
     """
 
     def has_object_permission(self, request, view, obj):

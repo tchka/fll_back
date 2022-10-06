@@ -4,7 +4,7 @@ from .views import ProfileUpdateView, ProfileRetrieveView, UserUpdateView, UserR
 
 urlpatterns = [
     # path('signup/', register, name='signup'),
-    path('all', UserListView.as_view()),
+    # path('all', UserListView.as_view()),
     path('<int:pk>', UserRetrieveView.as_view()),
     path('update/<int:pk>', UserUpdateView.as_view()),
 ]

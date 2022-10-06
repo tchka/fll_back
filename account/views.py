@@ -4,6 +4,7 @@ from rest_framework import generics
 from .serialisers import UserSerializer, ProfileSerializer, UserRetrieveSerializer, UserUpdateSerializer
 from .models import Profile
 from django.contrib.auth import get_user_model
+from .permissions import IsOwner
 
 
 #
@@ -45,11 +46,13 @@ class ProfileListView(generics.ListAPIView):
 class UserRetrieveView(generics.RetrieveAPIView):
     queryset = get_user_model().objects.all()
     serializer_class = UserRetrieveSerializer
+    permission_class = IsOwner
 
 
 class UserUpdateView(generics.RetrieveUpdateAPIView):
     queryset = get_user_model().objects.all()
     serializer_class = UserUpdateSerializer
+    permission_class = IsOwner
 
 
 class UserListView(generics.ListAPIView):
