@@ -174,18 +174,18 @@ class ReviewListView(generics.CreateAPIView):
 class OrderRetrieveView(generics.RetrieveAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderWorkoutSerializer
-    permission_class = IsCustomerOrExecutor
+    permission_classes = [IsAuthenticated, IsCustomerOrExecutor, ]
 
 
 class OrderUpdateView(generics.UpdateAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
-    permission_class = IsCustomer
+    permission_classes = [IsAuthenticated, IsCustomer, ]
 
 
 class OrderUnpublishedUpdateView(generics.UpdateAPIView):
     serializer_class = OrderUnpublishedSerializer
-    permission_class = IsCustomer
+    permission_classes = [IsAuthenticated, IsCustomer, ]
 
     def get_queryset(self):
         return Order.objects.filter(status__id=1)
@@ -193,7 +193,7 @@ class OrderUnpublishedUpdateView(generics.UpdateAPIView):
 
 class OrderWorkoutUpdateView(generics.RetrieveUpdateAPIView):
     serializer_class = OrderWorkoutSerializer
-    permission_class = IsExecutor
+    permission_classes = [IsAuthenticated, IsExecutor, ]
 
     def get_queryset(self):
         return Order.objects.filter(status__id__in=[3, 5, ])
@@ -214,7 +214,7 @@ class OrderWorkoutUpdateView(generics.RetrieveUpdateAPIView):
 
 class OrderPublishUpdateView(generics.UpdateAPIView):
     serializer_class = OrderStatusByCustomerSerializer
-    permission_class = IsCustomer
+    permission_classes = [IsAuthenticated, IsCustomer, ]
 
     def get_queryset(self):
         return Order.objects.filter(status__id=1)
@@ -234,7 +234,7 @@ class OrderPublishUpdateView(generics.UpdateAPIView):
 
 class OrderCancelUpdateView(generics.UpdateAPIView):
     serializer_class = OrderStatusByCustomerSerializer
-    permission_class = IsCustomer
+    permission_classes = [IsAuthenticated, IsCustomer, ]
 
     def get_queryset(self):
         return Order.objects.filter(status__id__in=[1, 2, ])
@@ -254,7 +254,7 @@ class OrderCancelUpdateView(generics.UpdateAPIView):
 
 class OrderUnpublishUpdateView(generics.UpdateAPIView):
     serializer_class = OrderStatusByCustomerSerializer
-    permission_class = IsCustomer
+    permission_classes = [IsAuthenticated, IsCustomer, ]
 
     def get_queryset(self):
         return Order.objects.filter(status__id=2)
@@ -274,7 +274,7 @@ class OrderUnpublishUpdateView(generics.UpdateAPIView):
 
 class OrderRestoreUpdateView(generics.UpdateAPIView):
     serializer_class = OrderStatusByCustomerSerializer
-    permission_class = IsCustomer
+    permission_classes = [IsAuthenticated, IsCustomer, ]
 
     def get_queryset(self):
         return Order.objects.filter(status__id=7)
@@ -294,7 +294,7 @@ class OrderRestoreUpdateView(generics.UpdateAPIView):
 
 class OrderApproveUpdateView(generics.UpdateAPIView):
     serializer_class = OrderStatusByCustomerSerializer
-    permission_class = IsCustomer
+    permission_classes = [IsAuthenticated, IsCustomer, ]
 
     def get_queryset(self):
         return Order.objects.filter(status__id=4)
@@ -314,7 +314,7 @@ class OrderApproveUpdateView(generics.UpdateAPIView):
 
 class OrderDisapproveUpdateView(generics.UpdateAPIView):
     serializer_class = OrderStatusByCustomerSerializer
-    permission_class = IsCustomer
+    permission_classes = [IsAuthenticated, IsCustomer, ]
 
     def get_queryset(self):
         return Order.objects.filter(status__id=4)
@@ -334,7 +334,7 @@ class OrderDisapproveUpdateView(generics.UpdateAPIView):
 
 class OrderTakeUpdateView(generics.UpdateAPIView):
     serializer_class = OrderStatusByExecutorSerializer
-    permission_class = IsExecutor
+    permission_classes = [IsAuthenticated, IsExecutor, ]
 
     # permission_class = permissions.IsAuthenticatedOrReadOnly
     def get_queryset(self):
@@ -358,13 +358,13 @@ class OrderTakeUpdateView(generics.UpdateAPIView):
 class OrderCreateView(generics.CreateAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderCreateSerializer
-    permission_class = IsCustomer
+    permission_classes = [IsAuthenticated, IsCustomer, ]
 
 
 class OrderListView(generics.ListAPIView):
     # queryset = Order.objects.all()
     serializer_class = OrderSerializer
-    permission_class = IsCustomerOrExecutor
+    permission_classes = [IsAuthenticated, IsCustomerOrExecutor, ]
 
     def get_queryset(self):
         queryset = Order.objects.all()
