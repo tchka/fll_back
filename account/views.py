@@ -1,9 +1,11 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework import generics
+from django.contrib.auth import get_user_model
+from rest_framework.permissions import IsAuthenticated
+
 from .serialisers import UserSerializer, ProfileSerializer, UserRetrieveSerializer, UserUpdateSerializer
 from .models import Profile
-from django.contrib.auth import get_user_model
 from .permissions import IsOwner
 
 
@@ -46,13 +48,13 @@ class ProfileListView(generics.ListAPIView):
 class UserRetrieveView(generics.RetrieveAPIView):
     queryset = get_user_model().objects.all()
     serializer_class = UserRetrieveSerializer
-    permission_class = IsOwner
+    permission_classes = [IsAuthenticated, IsOwner, ]
 
 
 class UserUpdateView(generics.RetrieveUpdateAPIView):
     queryset = get_user_model().objects.all()
     serializer_class = UserUpdateSerializer
-    permission_class = IsOwner
+    permission_classes = [IsAuthenticated, IsOwner, ]
 
 
 class UserListView(generics.ListAPIView):
