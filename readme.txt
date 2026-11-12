@@ -6,3 +6,8 @@ Front http://github.com/tchka/fll.git
 Сайт http://fllfll.temp.swtest.ru/
 Есть пробные аккаунты имполнителя и заказчика.
 На главную страницу выводится список свежих опубликованных заявок
+
+Локальный бэкенд в Docker:
+docker compose up --build
+Сервер: http://127.0.0.1:8000
+Админка: http://127.0.0.1:8000/admin/
